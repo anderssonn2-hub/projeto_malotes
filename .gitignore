@@ -1,0 +1,47 @@
+# Arquivos de configuração local
+.env
+.env.*
+config.php
+conexao.php
+credenciais.php
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+tmp/
+
+# Uploads
+uploads/
+
+# Backups
+backup/
+backups/
+
+# Arquivos temporários
+*.tmp
+*.bak
+*.swp
+
+# Sistema
+Thumbs.db
+Desktop.ini
+
+# IDE
+.vscode/
+.idea/
+
+# Dependências
+vendor/
+
+# Node
+node_modules/
+
+# Composer
+composer.lock
+
+# Python
+__pycache__/
+*.pyc
