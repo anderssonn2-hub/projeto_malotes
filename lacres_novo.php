@@ -4578,9 +4578,76 @@ if (!$acabouDeLimpar && $ehGetSnap && !$ehRecalculoSnap && !empty($datas_filtro)
 if (!$acabouDeLimpar && !$snapshotRestaurado) {
 try {
     $ultimoOficioId = 0;
-    if (isset($_SESSION['id_despacho_correios']) && $_SESSION['id_despacho_correios'] > 0) {
-        $ultimoOficioId = (int)$_SESSION['id_despacho_correios'];
-    } else {
+    $usarBuscaPadrao = true;
+
+    if (!empty($datas_filtro)) {
+        $usarBuscaPadrao = false;
+        $setFiltro = array();
+        foreach ($datas_filtro as $dFil) {
+            $dFil = trim((string)$dFil);
+            if ($dFil === "") { continue; }
+            if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $dFil)) {
+                $setFiltro[] = $dFil;
+            } else {
+                $objFil = DateTime::createFromFormat("d-m-Y", str_replace("/", "-", $dFil));
+                if ($objFil) { $setFiltro[] = $objFil->format("Y-m-d"); }
+            }
+        }
+        sort($setFiltro);
+        $setFiltro = array_values(array_unique($setFiltro));
+        $keyFiltro = implode(",", $setFiltro);
+
+        if ($keyFiltro !== "") {
+            $idExato = 0;
+            $idContido = 0;
+            $stOfData = $pdo_controle->query("SELECT id, datas_str FROM ciDespachos WHERE grupo = 'CORREIOS' AND ativo = 1 ORDER BY id DESC LIMIT 500");
+            if ($stOfData) {
+                while ($rowOfData = $stOfData->fetch(PDO::FETCH_ASSOC)) {
+                    $ds = isset($rowOfData["datas_str"]) ? (string)$rowOfData["datas_str"] : "";
+                    if (trim($ds) === "") { continue; }
+
+                    $parts = preg_split("/\s*,\s*/", trim($ds));
+                    $norm = array();
+                    foreach ($parts as $p) {
+                        $p = trim($p);
+                        if ($p === "") { continue; }
+                        if (preg_match("/^\d{4}-\d{2}-\d{2}$/", $p)) {
+                            $norm[] = $p;
+                        } elseif (preg_match("#^(\d{2})[/-](\d{2})[/-](\d{4})$#", $p, $mm)) {
+                            $norm[] = $mm[3] . "-" . $mm[2] . "-" . $mm[1];
+                        }
+                    }
+                    sort($norm);
+                    $norm = array_values(array_unique($norm));
+                    if (empty($norm)) { continue; }
+
+                    $keyOf = implode(",", $norm);
+                    if ($keyOf === $keyFiltro) {
+                        $idExato = (int)$rowOfData["id"];
+                        break;
+                    }
+
+                    $contemTudo = true;
+                    for ($cf = 0; $cf < count($setFiltro); $cf++) {
+                        if (!in_array($setFiltro[$cf], $norm)) { $contemTudo = false; break; }
+                    }
+                    if ($contemTudo && $idContido === 0) {
+                        $idContido = (int)$rowOfData["id"];
+                    }
+                }
+            }
+
+            if ($idExato > 0) {
+                $ultimoOficioId = $idExato;
+            } elseif ($idContido > 0) {
+                $ultimoOficioId = $idContido;
+            }
+        }
+    }
+
+    if ($usarBuscaPadrao && isset($_SESSION["id_despacho_correios"]) && $_SESSION["id_despacho_correios"] > 0) {
+        $ultimoOficioId = (int)$_SESSION["id_despacho_correios"];
+    } elseif ($usarBuscaPadrao) {
         $stUltimoOficio = $pdo_controle->prepare("
             SELECT id FROM ciDespachos 
             WHERE grupo = 'CORREIOS' 
@@ -4588,8 +4655,8 @@ try {
         ");
         $stUltimoOficio->execute();
         $ultimoOficioRow = $stUltimoOficio->fetch(PDO::FETCH_ASSOC);
-        if ($ultimoOficioRow && isset($ultimoOficioRow['id'])) {
-            $ultimoOficioId = (int)$ultimoOficioRow['id'];
+        if ($ultimoOficioRow && isset($ultimoOficioRow["id"])) {
+            $ultimoOficioId = (int)$ultimoOficioRow["id"];
         }
     }
     
