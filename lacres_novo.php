@@ -4423,14 +4423,11 @@ if (!$acabouDeLimpar && $ehGetSnap && !$ehRecalculoSnap && !empty($datas_filtro)
         $diagSnap['filtro'] = $setFiltroKeySnap;
 
         if ($setFiltroKeySnap !== '') {
-            // 2) Achar o oficio CORREIOS com snapshot cujas datas correspondem ao filtro.
-            //    Prioridade: (a) datas IGUAIS ao filtro (mais recente); senao (b) o oficio
-            //    mais recente cujas datas CONTEM todas as datas do filtro (ex.: filtrei so
-            //    o dia 17 mas o oficio cobriu 16+17+18 -> ainda restaura). Tolerante ao
-            //    formato de datas_str. A coluna pode nao existir -> catch fail-open.
+            // 2) Achar o oficio CORREIOS com snapshot cujas datas sejam EXATAMENTE iguais
+            //    ao filtro. Nao usar oficios que apenas contenham o periodo filtrado.
+            //    Tolerante ao formato de datas_str. A coluna pode nao existir -> catch fail-open.
             $snapJsonEncontrado = '';
             $exactJsonSnap = ''; $exactIdSnap = 0; $exactDatasSnap = '';
-            $superJsonSnap = ''; $superIdSnap = 0; $superDatasSnap = '';
             $stDespSnap = $pdo_controle->query("SELECT id, datas_str, snapshot_grade FROM ciDespachos WHERE grupo = 'CORREIOS' AND ativo = 1 AND snapshot_grade IS NOT NULL AND snapshot_grade <> '' ORDER BY id DESC LIMIT 300");
             if ($stDespSnap) {
                 while ($rdSnap = $stDespSnap->fetch(PDO::FETCH_ASSOC)) {
@@ -4450,28 +4447,18 @@ if (!$acabouDeLimpar && $ehGetSnap && !$ehRecalculoSnap && !empty($datas_filtro)
                     $normSnap = array_values(array_unique($normSnap));
                     $keySnap = implode(',', $normSnap);
                     if ($keySnap === '') { continue; }
-                    // o filtro esta CONTIDO nas datas do oficio?
-                    $contemTudo = true;
-                    for ($cf = 0; $cf < count($setFiltroArr); $cf++) {
-                        if (!in_array($setFiltroArr[$cf], $normSnap)) { $contemTudo = false; break; }
-                    }
                     if (count($diagSnap['candidatos']) < 12) {
-                        $diagSnap['candidatos'][] = array('id' => (int)$rdSnap['id'], 'datas' => $keySnap, 'len' => strlen((string)$rdSnap['snapshot_grade']), 'contem' => $contemTudo ? 1 : 0);
+                        $diagSnap['candidatos'][] = array('id' => (int)$rdSnap['id'], 'datas' => $keySnap, 'len' => strlen((string)$rdSnap['snapshot_grade']));
                     }
                     if ($keySnap === $setFiltroKeySnap) {
                         if ($exactJsonSnap === '') { $exactJsonSnap = (string)$rdSnap['snapshot_grade']; $exactIdSnap = (int)$rdSnap['id']; $exactDatasSnap = $keySnap; }
                         break; // id DESC => primeiro exato e o mais recente exato
-                    } elseif ($contemTudo && $superJsonSnap === '') {
-                        $superJsonSnap = (string)$rdSnap['snapshot_grade']; $superIdSnap = (int)$rdSnap['id']; $superDatasSnap = $keySnap;
                     }
                 }
             }
             if ($exactJsonSnap !== '') {
                 $snapJsonEncontrado = $exactJsonSnap;
                 $diagSnap['match_id'] = $exactIdSnap; $diagSnap['match_tipo'] = 'exato'; $diagSnap['match_datas'] = $exactDatasSnap;
-            } elseif ($superJsonSnap !== '') {
-                $snapJsonEncontrado = $superJsonSnap;
-                $diagSnap['match_id'] = $superIdSnap; $diagSnap['match_tipo'] = 'contido'; $diagSnap['match_datas'] = $superDatasSnap;
             }
             $diagSnap['snap_len'] = strlen($snapJsonEncontrado);
 
@@ -4599,7 +4586,6 @@ try {
 
         if ($keyFiltro !== "") {
             $idExato = 0;
-            $idContido = 0;
             $stOfData = $pdo_controle->query("SELECT id, datas_str FROM ciDespachos WHERE grupo = 'CORREIOS' AND ativo = 1 ORDER BY id DESC LIMIT 500");
             if ($stOfData) {
                 while ($rowOfData = $stOfData->fetch(PDO::FETCH_ASSOC)) {
@@ -4626,21 +4612,11 @@ try {
                         $idExato = (int)$rowOfData["id"];
                         break;
                     }
-
-                    $contemTudo = true;
-                    for ($cf = 0; $cf < count($setFiltro); $cf++) {
-                        if (!in_array($setFiltro[$cf], $norm)) { $contemTudo = false; break; }
-                    }
-                    if ($contemTudo && $idContido === 0) {
-                        $idContido = (int)$rowOfData["id"];
-                    }
                 }
             }
 
             if ($idExato > 0) {
                 $ultimoOficioId = $idExato;
-            } elseif ($idContido > 0) {
-                $ultimoOficioId = $idContido;
             }
         }
     }
