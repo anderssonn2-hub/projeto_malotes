@@ -19,7 +19,7 @@
 // =========================================================================
 header('Cache-Control: no-cache, no-store, must-revalidate');
 @date_default_timezone_set('America/Sao_Paulo');
-require_once dirname(__FILE__) . '/db_config.php';
+require_once dirname(__FILE__) . '/config/db_config.php';
 
 function adEsc($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 

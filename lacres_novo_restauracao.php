@@ -6519,7 +6519,7 @@ if ($grupo_atual === 'correios' && $id_despacho_atual > 0) {
 
 
 <div class="quadro quadro-logo somente-impressao" style="margin-bottom: 15px;">
-    <img src="logo_celepar.png" style="height: 60px; float: left; margin-right: 15px;">
+    <img src="assets/img/logo_celepar.png" style="height: 60px; float: left; margin-right: 15px;">
     <div style="font-size: 14px;">
         <strong>CELEPAR – TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO DO PARANÁ</strong><br>
         COMPROVANTE DE ENTREGA DE SERVIÇOS
@@ -11154,8 +11154,8 @@ if (isset($_SESSION['auto_imprimir_correios']) && $_SESSION['auto_imprimir_corre
 }
 ?>
 
-<?php include __DIR__ . '/util_botoes_fixos.php'; ?>
+<?php include __DIR__ . '/includes/util_botoes_fixos.php'; ?>
 
-<?php include __DIR__ . '/_acess.php'; ?>
+<?php include __DIR__ . '/includes/_acess.php'; ?>
 </body>
 </html>

@@ -7,7 +7,7 @@
 // passando ?q=<valor> na URL, e abre direto na tela de resultados.
 // Retorno: oficio(s), postos, lacres, displays, lotes e movimentos envolvidos.
 // =========================================================================
-require_once __DIR__ . '/db_config.php';
+require_once __DIR__ . '/config/db_config.php';
 
 @date_default_timezone_set('America/Sao_Paulo');
 

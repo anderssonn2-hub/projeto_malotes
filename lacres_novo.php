@@ -7773,7 +7773,7 @@ window._ptNotificarOficioPeriodo = _ptNotificarOficioPeriodo;
 
 
 <div class="quadro quadro-logo somente-impressao" style="margin-bottom: 15px;">
-    <img src="logo_celepar.png" style="height: 60px; float: left; margin-right: 15px;">
+    <img src="assets/img/logo_celepar.png" style="height: 60px; float: left; margin-right: 15px;">
     <div style="font-size: 14px;">
         <strong>CELEPAR – TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO DO PARANÁ</strong><br>
         COMPROVANTE DE ENTREGA DE SERVIÇOS
@@ -13219,8 +13219,8 @@ if (isset($_SESSION['auto_imprimir_correios']) && $_SESSION['auto_imprimir_corre
 }
 ?>
 
-<?php $f_ubf = __DIR__ . '/util_botoes_fixos.php'; if (file_exists($f_ubf)) { include $f_ubf; } ?>
+<?php $f_ubf = __DIR__ . '/includes/util_botoes_fixos.php'; if (file_exists($f_ubf)) { include $f_ubf; } ?>
 
-<?php $f_acess = __DIR__ . '/_acess.php'; if (file_exists($f_acess)) { include $f_acess; } ?>
+<?php $f_acess = __DIR__ . '/includes/_acess.php'; if (file_exists($f_acess)) { include $f_acess; } ?>
 </body>
 </html>

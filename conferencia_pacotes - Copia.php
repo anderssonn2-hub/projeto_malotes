@@ -1484,12 +1484,12 @@ if (empty($regionais_data)) {
 </div>
 
 <!-- Áudios -->
-<audio id="beep" src="beep.mp3" preload="auto"></audio>
-<audio id="concluido" src="concluido.mp3" preload="auto"></audio>
-<audio id="pacotejaconferido" src="pacotejaconferido.mp3" preload="auto"></audio>
-<audio id="pacotedeoutraregional" src="pacotedeoutraregional.mp3" preload="auto"></audio>
-<audio id="posto_poupatempo" src="posto_poupatempo.mp3" preload="auto"></audio>
-<audio id="pertence_correios" src="pertence_aos_correios.mp3" preload="auto"></audio>
+<audio id="beep" src="assets/audio/beep.mp3" preload="auto"></audio>
+<audio id="concluido" src="assets/audio/concluido.mp3" preload="auto"></audio>
+<audio id="pacotejaconferido" src="assets/audio/pacotejaconferido.mp3" preload="auto"></audio>
+<audio id="pacotedeoutraregional" src="assets/audio/pacotedeoutraregional.mp3" preload="auto"></audio>
+<audio id="posto_poupatempo" src="assets/audio/posto_poupatempo.mp3" preload="auto"></audio>
+<audio id="pertence_correios" src="assets/audio/pertence_aos_correios.mp3" preload="auto"></audio>
 
 <script>
 // ========================================

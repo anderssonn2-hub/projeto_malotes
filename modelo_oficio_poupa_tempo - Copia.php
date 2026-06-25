@@ -1802,7 +1802,7 @@ if (document.readyState === 'loading') {
     <div class="oficio">
       <div class="cols100 border-1px">
         <div class="cols25 fleft margin2px">
-          <img alt="Logotipo" style="margin-left:10px;margin-top:10px;padding-right:15px;float:left" src="logo_celepar.png" width="250" height="55">
+          <img alt="Logotipo" style="margin-left:10px;margin-top:10px;padding-right:15px;float:left" src="assets/img/logo_celepar.png" width="250" height="55">
         </div>
         <div class="cols65 fright center margin2px">
           <h3><i>COSEP <br> Coordenacao De Servicos De Producao</i></h3>

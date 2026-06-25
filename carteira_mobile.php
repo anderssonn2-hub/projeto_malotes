@@ -194,7 +194,7 @@ if (inpOf && inpOf.addEventListener) {
 }
 inp.focus();
 </script>
-<script src="lib_zxing.min.js"></script>
-<script src="lib_cam_scanner.js"></script>
+<script src="assets/js/lib_zxing.min.js"></script>
+<script src="assets/js/lib_cam_scanner.js"></script>
 </body>
 </html>

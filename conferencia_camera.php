@@ -16,7 +16,7 @@
  * Compatibilidade: o PHP do servidor segue 5.3.3 (array(), sem closures pesadas).
  * O JavaScript e moderno de proposito: esta pagina e mobile-only (Android Chrome).
  *
- * Decodificador 1D Code-128 OFFLINE: lib_zxing.min.js (@zxing/library, UMD),
+ * Decodificador 1D Code-128 OFFLINE: assets/js/lib_zxing.min.js (@zxing/library, UMD),
  * embutido inline para a pagina funcionar salva localmente, sem internet.
  *
  * Layout do codigo de barras de 19 digitos:
@@ -86,7 +86,7 @@ if ($lotesJsonBruto !== '') {
 $totalLotes = count($lotes);
 
 // --- Decodificador offline embutido ---
-$zxingPath = dirname(__FILE__) . '/lib_zxing.min.js';
+$zxingPath = dirname(__FILE__) . '/assets/js/lib_zxing.min.js';
 $zxingDisponivel = is_readable($zxingPath);
 ?>
 <!DOCTYPE html>
@@ -181,10 +181,10 @@ body { margin:0; font-family: Arial, Helvetica, sans-serif; background:#0e1726; 
 <div class="msg info" id="msg">Aponte a câmera/foto para o código de barras, ou bipe no campo acima.</div>
 
 <div style="display:none" aria-hidden="true">
-    <audio id="concluido" src="concluido.mp3" preload="auto"></audio>
-    <audio id="pacotejaconferido" src="pacotejaconferido.mp3" preload="auto"></audio>
-    <audio id="pacotedeoutraregional" src="pacotedeoutraregional.mp3" preload="auto"></audio>
-    <audio id="pacote_nao_encontrado" src="pacote_nao_foi_encontrado.mp3" preload="auto"></audio>
+    <audio id="concluido" src="assets/audio/concluido.mp3" preload="auto"></audio>
+    <audio id="pacotejaconferido" src="assets/audio/pacotejaconferido.mp3" preload="auto"></audio>
+    <audio id="pacotedeoutraregional" src="assets/audio/pacotedeoutraregional.mp3" preload="auto"></audio>
+    <audio id="pacote_nao_encontrado" src="assets/audio/pacote_nao_foi_encontrado.mp3" preload="auto"></audio>
 </div>
 
 <div class="lista" id="lista">

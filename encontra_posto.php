@@ -1528,7 +1528,7 @@ if ($dbOk) {
 
 </div>
 
-<audio id="audioBeep" src="beep.mp3" preload="auto"></audio>
+<audio id="audioBeep" src="assets/audio/beep.mp3" preload="auto"></audio>
 
 <div class="overlay-datas" id="overlayDatas" style="display:flex;">
     <div class="card">
@@ -3117,11 +3117,11 @@ function abrirCameraEP() {
 
 </script>
 
-<?php include __DIR__ . '/processando_overlay.php'; ?>
-<?php include __DIR__ . '/util_botoes_fixos.php'; ?>
+<?php include __DIR__ . '/includes/processando_overlay.php'; ?>
+<?php include __DIR__ . '/includes/util_botoes_fixos.php'; ?>
 
-<script src="lib_zxing.min.js"></script>
-<script src="lib_cam_scanner.js"></script>
-<?php include __DIR__ . '/_acess.php'; ?>
+<script src="assets/js/lib_zxing.min.js"></script>
+<script src="assets/js/lib_cam_scanner.js"></script>
+<?php include __DIR__ . '/includes/_acess.php'; ?>
 </body>
 </html>

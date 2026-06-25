@@ -528,8 +528,8 @@ if ($id_despacho > 0) {
     <?php endif; ?>
 
 </div>
-<?php include __DIR__ . '/util_botoes_fixos.php'; ?>
-<?php include __DIR__ . '/_acess.php'; ?>
+<?php include __DIR__ . '/includes/util_botoes_fixos.php'; ?>
+<?php include __DIR__ . '/includes/_acess.php'; ?>
 </body>
 </html>
 <?php

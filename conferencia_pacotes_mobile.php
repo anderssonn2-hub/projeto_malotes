@@ -113,21 +113,21 @@ try {
         // 1) Pacote de outra regional (Correios): regional do código != regional autoritativa
         //    (não se aplica a PT)
         if ($isPT == 0 && $regional_autoritativo !== '' && $regional !== $regional_autoritativo) {
-            $audio_alerta = 'pacotedeoutraregional.mp3';
+            $audio_alerta = 'assets/audio/pacotedeoutraregional.mp3';
             $alerta_tipo = 'outra_regional';
             $alerta_msg = 'Pacote de outra regional';
             $pode_conferir = false;
         }
         // 2) Está em modo Correios, mas o posto é Poupa Tempo
         elseif ($tipo_conferencia === 'correios' && $isPT == 1) {
-            $audio_alerta = 'posto_poupatempo.mp3';
+            $audio_alerta = 'assets/audio/posto_poupatempo.mp3';
             $alerta_tipo = 'posto_poupatempo';
             $alerta_msg = 'Posto do Poupa Tempo';
             $pode_conferir = false;
         }
         // 3) Está em modo Poupa Tempo, mas o posto é Correios
         elseif ($tipo_conferencia === 'poupatempo' && $isPT == 0) {
-            $audio_alerta = 'pertence_aos_correios.mp3';
+            $audio_alerta = 'assets/audio/pertence_aos_correios.mp3';
             $alerta_tipo = 'posto_correios';
             $alerta_msg = 'Posto dos Correios';
             $pode_conferir = false;
@@ -170,7 +170,7 @@ try {
             die(json_encode(array(
                 'success' => false, 
                 'erro' => 'ja_conferido',
-                'audio' => 'pacotejaconferido.mp3',
+                'audio' => 'assets/audio/pacotejaconferido.mp3',
                 'lote' => $lote,
                 'posto' => $posto,
                 'regional' => $regional_salvar
@@ -231,7 +231,7 @@ if ($pacoteInfo) {
     }
 
     if ($totalGrupo > 0 && $conferidos_antes < $totalGrupo && $conferidos_depois >= $totalGrupo) {
-        $audio_conclusao = 'concluido.mp3';
+        $audio_conclusao = 'assets/audio/concluido.mp3';
     }
 }
 
@@ -247,7 +247,7 @@ if ($pacoteInfo) {
             'qtd' => $qtd,
             'dataexp' => $dataexp_exib,
             'tipo_entrega' => $tipo_entrega,
-            'audio_beep' => 'beep.mp3',
+            'audio_beep' => 'assets/audio/beep.mp3',
             'audio_alerta' => $audio_alerta,
             'audio_conclusao' => $audio_conclusao
         )));
@@ -885,12 +885,12 @@ if ($pacoteInfo) {
 </div>
 
 <!-- Áudios -->
-<audio id="audioBeep" src="beep.mp3" preload="auto"></audio>
-<audio id="audioConcluido" src="concluido.mp3" preload="auto"></audio>
-<audio id="audioJaConferido" src="pacotejaconferido.mp3" preload="auto"></audio>
-<audio id="audioOutraRegional" src="pacotedeoutraregional.mp3" preload="auto"></audio>
-<audio id="audioPoupaTempo" src="posto_poupatempo.mp3" preload="auto"></audio>
-<audio id="audioCorreios" src="pertence_aos_correios.mp3" preload="auto"></audio>
+<audio id="audioBeep" src="assets/audio/beep.mp3" preload="auto"></audio>
+<audio id="audioConcluido" src="assets/audio/concluido.mp3" preload="auto"></audio>
+<audio id="audioJaConferido" src="assets/audio/pacotejaconferido.mp3" preload="auto"></audio>
+<audio id="audioOutraRegional" src="assets/audio/pacotedeoutraregional.mp3" preload="auto"></audio>
+<audio id="audioPoupaTempo" src="assets/audio/posto_poupatempo.mp3" preload="auto"></audio>
+<audio id="audioCorreios" src="assets/audio/pertence_aos_correios.mp3" preload="auto"></audio>
 
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <script>
@@ -1113,9 +1113,9 @@ function processarCodigo(codigo) {
             
             // Tocar áudios na ordem
             if (data.audio_beep) enqueueAudio('audioBeep');
-            if (data.audio_alerta === 'posto_poupatempo.mp3') enqueueAudio('audioPoupaTempo');
-            if (data.audio_alerta === 'pertence_aos_correios.mp3') enqueueAudio('audioCorreios');
-            if (data.audio_alerta === 'pacotedeoutraregional.mp3') enqueueAudio('audioOutraRegional');
+            if (data.audio_alerta === 'assets/audio/posto_poupatempo.mp3') enqueueAudio('audioPoupaTempo');
+            if (data.audio_alerta === 'assets/audio/pertence_aos_correios.mp3') enqueueAudio('audioCorreios');
+            if (data.audio_alerta === 'assets/audio/pacotedeoutraregional.mp3') enqueueAudio('audioOutraRegional');
             if (data.audio_conclusao) enqueueAudio('audioConcluido');
             
             carregarStats();
@@ -1136,9 +1136,9 @@ function processarCodigo(codigo) {
                     regional_codigo: data.regional_codigo,
                     tipo_entrega: data.tipo_entrega
                 });
-                if (data.audio_alerta === 'posto_poupatempo.mp3') enqueueAudio('audioPoupaTempo');
-                if (data.audio_alerta === 'pertence_aos_correios.mp3') enqueueAudio('audioCorreios');
-                if (data.audio_alerta === 'pacotedeoutraregional.mp3') enqueueAudio('audioOutraRegional');
+                if (data.audio_alerta === 'assets/audio/posto_poupatempo.mp3') enqueueAudio('audioPoupaTempo');
+                if (data.audio_alerta === 'assets/audio/pertence_aos_correios.mp3') enqueueAudio('audioCorreios');
+                if (data.audio_alerta === 'assets/audio/pacotedeoutraregional.mp3') enqueueAudio('audioOutraRegional');
             } else {
                 mostrarResultado('erro', { mensagem: data.erro || 'Erro desconhecido' });
             }

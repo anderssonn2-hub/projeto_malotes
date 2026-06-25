@@ -1,6 +1,6 @@
 <?php
 // Conferencia de Inventario - cruza inventario fisico (texto) com ciMalotes
-require_once 'db_config.php';
+require_once __DIR__ . '/config/db_config.php';
 session_start();
 $pdo = getDbPdo();
 

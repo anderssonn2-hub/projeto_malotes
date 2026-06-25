@@ -663,6 +663,6 @@ function carregarLogAgendador() {
 
 carregarLembretes();
 </script>
-<?php include __DIR__ . '/util_botoes_fixos.php'; ?>
+<?php include __DIR__ . '/includes/util_botoes_fixos.php'; ?>
 </body>
 </html>

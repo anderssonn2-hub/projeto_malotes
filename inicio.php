@@ -313,9 +313,9 @@
 
     </div>
   </div>
-<?php include __DIR__ . '/_acess.php'; ?>
-  <?php include __DIR__ . '/processando_overlay.php'; ?>
-  <?php include __DIR__ . '/util_botoes_fixos.php'; ?>
+<?php include __DIR__ . '/includes/_acess.php'; ?>
+  <?php include __DIR__ . '/includes/processando_overlay.php'; ?>
+  <?php include __DIR__ . '/includes/util_botoes_fixos.php'; ?>
 <script>
 function toggleCards(id) {
     var btn = document.getElementById('btn-' + id);

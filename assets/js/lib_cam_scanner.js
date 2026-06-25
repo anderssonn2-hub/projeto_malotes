@@ -1,10 +1,10 @@
 // =====================================================================
-// lib_cam_scanner.js — Modulo COMPARTILHADO de leitura por camera ao vivo
+// assets/js/lib_cam_scanner.js — Modulo COMPARTILHADO de leitura por camera ao vivo
 // ---------------------------------------------------------------------
 // Monta um overlay de tela cheia (video + mira + diagnostico) e le codigos
 // de barras pela camera do celular. Usa o BarcodeDetector NATIVO do
 // navegador (primario, ML Kit no Android Chrome) e o ZXing por REGIAO (ROI)
-// como fallback. Requer a lib LOCAL `lib_zxing.min.js` carregada ANTES deste
+// como fallback. Requer a lib LOCAL `assets/js/lib_zxing.min.js` carregada ANTES deste
 // arquivo (global `ZXing`) para o fallback; o leitor nativo funciona sem ela.
 //
 // Uso:

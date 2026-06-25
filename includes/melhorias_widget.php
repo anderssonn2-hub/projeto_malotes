@@ -305,7 +305,7 @@ $melhoriasWidgetPagina = htmlspecialchars($melhoriasWidgetPagina, ENT_QUOTES, 'U
     }
     window.__melhoriasWidgetInicializado = true;
 
-    var apiUrl = 'melhorias_widget_api.php';
+    var apiUrl = 'api/melhorias_widget_api.php';
     var botao = document.getElementById('melhoriasWidgetBotao');
     var fundo = document.getElementById('melhoriasWidgetFundo');
     var lista = document.getElementById('melhoriasWidgetLista');

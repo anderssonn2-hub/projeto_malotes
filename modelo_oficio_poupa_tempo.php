@@ -3451,7 +3451,7 @@ if (document.readyState === 'loading') {
             <div class="oficio">
                 <div class="quadro-logo-mestre">
                     <div class="logo-mestre">
-                        <img alt="Logotipo" src="logo_celepar.png" width="250" height="55">
+                        <img alt="Logotipo" src="assets/img/logo_celepar.png" width="250" height="55">
                     </div>
                     <div class="texto-logo-mestre">
                         <strong>CELEPAR – TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO DO PARANÁ</strong>
@@ -3670,7 +3670,7 @@ if (document.readyState === 'loading') {
     <div class="oficio">
       <div class="cols100 border-1px">
         <div class="cols25 fleft margin2px">
-          <img alt="Logotipo" style="margin-left:10px;margin-top:10px;padding-right:15px;float:left" src="logo_celepar.png" width="250" height="55">
+          <img alt="Logotipo" style="margin-left:10px;margin-top:10px;padding-right:15px;float:left" src="assets/img/logo_celepar.png" width="250" height="55">
         </div>
         <div class="cols65 fright center margin2px">
           <h3><i>COSEP <br> Coordenacao De Servicos De Producao</i></h3>
@@ -4838,9 +4838,9 @@ function voltarAcaoPT() {
 }());
 
 </script>
-<?php include __DIR__ . '/processando_overlay.php'; ?>
-<?php include __DIR__ . '/util_botoes_fixos.php'; ?>
-<?php include __DIR__ . '/_acess.php'; ?>
+<?php include __DIR__ . '/includes/processando_overlay.php'; ?>
+<?php include __DIR__ . '/includes/util_botoes_fixos.php'; ?>
+<?php include __DIR__ . '/includes/_acess.php'; ?>
 <script type="text/javascript">
 // v1.1.7: Auto-sequência col-lacre-correios-pt e auto-cursor col-etiqueta (tabela mestre)
 (function() {

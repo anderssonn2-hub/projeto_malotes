@@ -53,7 +53,13 @@ $metadados_dias = array();
 $db_error = null;
 $stats = array('carteiras_emitidas' => 0, 'carteiras_conferidas' => 0, 'pacotes_conferidos' => 0, 'postos_conferidos' => 0);
 
-require_once __DIR__ . '/db_singleton.php';
+require_once __DIR__ . '/config/db_config.php';
+
+if (!function_exists('getDb')) {
+    function getDb() {
+        return getDbPdo();
+    }
+}
 
 function e($s) {
     return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8');
@@ -1938,7 +1944,7 @@ if (empty($regionais_data)) {
 
 <div id="painelImpressaoOficio" style="display:none;">
     <div style="text-align:center; margin-bottom:20px;">
-        <img src="logo_celepar.png" alt="Celepar" style="max-height:60px;">
+        <img src="assets/img/logo_celepar.png" alt="Celepar" style="max-height:60px;">
         <h2 style="margin-top:8px; font-size:18px;">OFICIO DE REMESSA - CORREIOS</h2>
         <div id="oficioImpressaoData" style="font-size:12px; color:#555;"></div>
     </div>
@@ -1967,12 +1973,12 @@ if (empty($regionais_data)) {
     </div>
 </div>
 
-<audio id="beep" src="beep.mp3" preload="auto"></audio>
-<audio id="concluido" src="concluido.mp3" preload="auto"></audio>
-<audio id="pacotejaconferido" src="pacotejaconferido.mp3" preload="auto"></audio>
-<audio id="pacotedeoutraregional" src="pacotedeoutraregional.mp3" preload="auto"></audio>
-<audio id="posto_poupatempo" src="posto_poupatempo.mp3" preload="auto"></audio>
-<audio id="pertence_correios" src="pertence_aos_correios.mp3" preload="auto"></audio>
+<audio id="beep" src="assets/audio/beep.mp3" preload="auto"></audio>
+<audio id="concluido" src="assets/audio/concluido.mp3" preload="auto"></audio>
+<audio id="pacotejaconferido" src="assets/audio/pacotejaconferido.mp3" preload="auto"></audio>
+<audio id="pacotedeoutraregional" src="assets/audio/pacotedeoutraregional.mp3" preload="auto"></audio>
+<audio id="posto_poupatempo" src="assets/audio/posto_poupatempo.mp3" preload="auto"></audio>
+<audio id="pertence_correios" src="assets/audio/pertence_aos_correios.mp3" preload="auto"></audio>
 <audio id="somFinalConf" src="som_final_de_conferencia.mp3" preload="auto" loop></audio>
 
 <script>

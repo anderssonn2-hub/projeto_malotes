@@ -2181,8 +2181,8 @@ function showTab(tabName) {
 })();
 </script>
 
-<?php include __DIR__ . '/processando_overlay.php'; ?>
-<?php include __DIR__ . '/util_botoes_fixos.php'; ?>
+<?php include __DIR__ . '/includes/processando_overlay.php'; ?>
+<?php include __DIR__ . '/includes/util_botoes_fixos.php'; ?>
 
 </body>
 </html>

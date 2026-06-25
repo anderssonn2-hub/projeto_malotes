@@ -453,8 +453,8 @@ a{color:#0b3d91;text-decoration:none;}
 <?php endif; ?>
 </div>
 
-<?php include __DIR__ . '/_acess.php'; ?>
-<?php if (file_exists(__DIR__ . '/processando_overlay.php')) include __DIR__ . '/processando_overlay.php'; ?>
+<?php include __DIR__ . '/includes/_acess.php'; ?>
+<?php if (file_exists(__DIR__ . '/includes/processando_overlay.php')) include __DIR__ . '/includes/processando_overlay.php'; ?>
 
 <script>
 (function() {

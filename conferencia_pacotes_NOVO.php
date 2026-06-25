@@ -440,10 +440,10 @@ foreach (array_keys($regionais_data) as $reg) {
         </div>
     </div>
 
-    <audio id="beep" src="beep.mp3" preload="auto"></audio>
-    <audio id="concluido" src="concluido.mp3" preload="auto"></audio>
-    <audio id="jaconf" src="pacotejaconferido.mp3" preload="auto"></audio>
-    <audio id="ptsom" src="posto_poupatempo.mp3" preload="auto"></audio>
+    <audio id="beep" src="assets/audio/beep.mp3" preload="auto"></audio>
+    <audio id="concluido" src="assets/audio/concluido.mp3" preload="auto"></audio>
+    <audio id="jaconf" src="assets/audio/pacotejaconferido.mp3" preload="auto"></audio>
+    <audio id="ptsom" src="assets/audio/posto_poupatempo.mp3" preload="auto"></audio>
 
     <script>
     (function() {

@@ -36,7 +36,7 @@ if ($tam < 150) { $tam = 150; }
 if ($tam > 700) { $tam = 700; }
 
 // Lib LOCAL de QR (a LAN bloqueia HTTPS/CDN, entao o fallback tem que ser local).
-$temQrLib = is_file(__DIR__ . '/lib_qrcode.js');
+$temQrLib = is_file(__DIR__ . '/assets/js/lib_qrcode.js');
 
 // ---- Paginas que ganham QR ----
 $paginas = array(
@@ -193,11 +193,11 @@ body {
 <div class="rodape">Sistema Lacres &middot; Imprima e cole onde o pessoal possa escanear pelo celular.</div>
 
 <?php if ($temQrLib): ?>
-<script src="lib_qrcode.js"></script>
+<script src="assets/js/lib_qrcode.js"></script>
 <?php endif; ?>
 <script>
 // Fallback: se a imagem (api.qrserver) falhar, gera o QR no proprio navegador com
-// a lib LOCAL lib_qrcode.js (global "qrcode"). Sem CDN, pois a LAN bloqueia HTTPS.
+// a lib LOCAL assets/js/lib_qrcode.js (global "qrcode"). Sem CDN, pois a LAN bloqueia HTTPS.
 function gerarQRLocal(idx) {
     var fb = document.getElementById('fbMsg' + idx); if (fb) { fb.style.display = 'block'; }
     var img = document.getElementById('qrimg' + idx); if (img) { img.style.display = 'none'; }

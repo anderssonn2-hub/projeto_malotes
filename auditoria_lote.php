@@ -15,7 +15,7 @@
 header('Cache-Control: no-cache, no-store, must-revalidate');
 session_start();
 
-require_once dirname(__FILE__) . '/db_config.php';
+require_once dirname(__FILE__) . '/config/db_config.php';
 
 function eAUD($s) {
     $s2 = (string)$s;

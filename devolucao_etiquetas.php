@@ -1666,8 +1666,8 @@ body.dark .filtro-btn.ativo{background:#0b3d91;color:#fff;}
 
 })();
 </script>
-<script src="lib_zxing.min.js"></script>
-<script src="lib_cam_scanner.js"></script>
-<?php include __DIR__ . '/_acess.php'; ?>
+<script src="assets/js/lib_zxing.min.js"></script>
+<script src="assets/js/lib_cam_scanner.js"></script>
+<?php include __DIR__ . '/includes/_acess.php'; ?>
 </body>
 </html>

@@ -611,7 +611,7 @@ try {
 
         <div class="documento">
             <div class="quadro-logo">
-                <img src="logo_celepar.png" alt="Celepar">
+                <img src="assets/img/logo_celepar.png" alt="Celepar">
                 <div class="quadro-logo-texto">
                     <strong>CELEPAR – TECNOLOGIA DA INFORMAÇÃO E COMUNICAÇÃO DO PARANÁ</strong>
                     COMPROVANTE DE ENTREGA DE SERVIÇOS
@@ -1336,7 +1336,7 @@ try {
         window.setInterval(sincronizarComEstadoRemoto, 1200);
     })();
     </script>
-<?php include __DIR__ . '/processando_overlay.php'; ?>
-<?php include __DIR__ . '/util_botoes_fixos.php'; ?>
+<?php include __DIR__ . '/includes/processando_overlay.php'; ?>
+<?php include __DIR__ . '/includes/util_botoes_fixos.php'; ?>
 </body>
 </html>

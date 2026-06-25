@@ -14,7 +14,7 @@
 @date_default_timezone_set('America/Sao_Paulo');
 function e($s) { return htmlspecialchars((string)$s, ENT_QUOTES, 'UTF-8'); }
 
-$temZxing = is_file(__DIR__ . '/lib_zxing.min.js');
+$temZxing = is_file(__DIR__ . '/assets/js/lib_zxing.min.js');
 ?><!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -161,7 +161,7 @@ body {
 </div>
 
 <?php if ($temZxing): ?>
-<script src="lib_zxing.min.js"></script>
+<script src="assets/js/lib_zxing.min.js"></script>
 <?php endif; ?>
 <script>
 var ZXING_OK = (typeof ZXing !== 'undefined' && ZXing);

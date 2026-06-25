@@ -674,9 +674,9 @@ body.dark .btn-del-row{color:#ef9a9a;}
 </div>
 
 <!-- Áudios -->
-<audio id="audioConcluido" src="concluido.mp3" preload="auto"></audio>
-<audio id="audioOutraRegional" src="pacotedeoutraregional.mp3" preload="auto"></audio>
-<audio id="audioBeep" src="beep_correio.mp3" preload="auto"></audio>
+<audio id="audioConcluido" src="assets/audio/concluido.mp3" preload="auto"></audio>
+<audio id="audioOutraRegional" src="assets/audio/pacotedeoutraregional.mp3" preload="auto"></audio>
+<audio id="audioBeep" src="assets/audio/beep_correio.mp3" preload="auto"></audio>
 
 <script>
 var dataHoje = '<?php echo e_odc($dataHoje); ?>';
@@ -1510,7 +1510,7 @@ document.getElementById('btnLimpar').addEventListener('click',function(){
 });
 if(inputScan)inputScan.focus();
 </script>
-<?php include __DIR__ . '/util_botoes_fixos.php'; ?>
-<?php include __DIR__ . '/_acess.php'; ?>
+<?php include __DIR__ . '/includes/util_botoes_fixos.php'; ?>
+<?php include __DIR__ . '/includes/_acess.php'; ?>
 </body>
 </html>

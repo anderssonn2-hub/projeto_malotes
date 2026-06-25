@@ -583,7 +583,7 @@ $usuarioSessao = isset($_SESSION['usuario']) ? trim((string)$_SESSION['usuario']
     </style>
 </head>
 <body>
-<audio id="audioPtBeep" src="beep_correio.mp3" preload="auto"></audio>
+<audio id="audioPtBeep" src="assets/audio/beep_correio.mp3" preload="auto"></audio>
     <div class="page">
         <div class="hero">
             <div>
