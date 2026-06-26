@@ -4562,6 +4562,7 @@ if (!$acabouDeLimpar && $ehGetSnap && !$ehRecalculoSnap && !empty($datas_filtro)
 }
 
 // Buscar o último ofício CORREIOS e carregar seus lacres para os arrays $dados (se não foi "Limpar Sessão")
+$ultimoOficioIdFiltro = 0;
 if (!$acabouDeLimpar && !$snapshotRestaurado) {
 try {
     $ultimoOficioId = 0;
@@ -4636,6 +4637,8 @@ try {
         }
     }
     
+    $ultimoOficioIdFiltro = (int)$ultimoOficioId;
+
     if ($ultimoOficioId > 0) {
         // Buscar lacres dos lotes deste ofício
         $stLacres = $pdo_controle->prepare("
@@ -4711,6 +4714,15 @@ try {
     // Silenciar erro - continuar sem lacres do BD
 }
 } // fim do if (!$acabouDeLimpar)
+
+// Memoria de sessao (lacres/etiquetas/snapshot_lacres) so pode ser usada quando:
+// - nao ha filtro de datas; OU
+// - houve restauracao exata por snapshot; OU
+// - houve oficio exato para o periodo filtrado.
+$permitirMemoriaSessao = true;
+if (!empty($datas_filtro) && !$snapshotRestaurado && ((int)$ultimoOficioIdFiltro <= 0)) {
+    $permitirMemoriaSessao = false;
+}
 
 // === Status de cada posto (display em transito, bloqueio, restricao) ===
 // Levanta, por posto, o estado do display (em transito vs disponivel via ciMalotes),
@@ -5341,10 +5353,10 @@ if ($recalcular_capital && extrairUltimoLacreSequencial($lacre_capital) > 0) {
             $linha['lacre_correios'] = '';
         }
         // Sobrescrever com valores personalizados se existirem
-        if (isset($_SESSION['lacres_personalizados'][$indice]['iipr'])) {
+        if ($permitirMemoriaSessao && isset($_SESSION['lacres_personalizados'][$indice]['iipr'])) {
             $linha['lacre_iipr'] = $_SESSION['lacres_personalizados'][$indice]['iipr'];
         }
-        if (isset($_SESSION['lacres_personalizados'][$indice]['correios'])) {
+        if ($permitirMemoriaSessao && isset($_SESSION['lacres_personalizados'][$indice]['correios'])) {
             $linha['lacre_correios'] = $_SESSION['lacres_personalizados'][$indice]['correios'];
         }
     }
@@ -5375,7 +5387,7 @@ if ($recalcular_central && extrairUltimoLacreSequencial($lacre_central) > 0) {
             $linha['lacre_iipr'] = '';
         }
         // Sobrescrever com valor personalizado se existir
-        if (isset($_SESSION['lacres_personalizados'][$indice]['iipr'])) {
+        if ($permitirMemoriaSessao && isset($_SESSION['lacres_personalizados'][$indice]['iipr'])) {
             $linha['lacre_iipr'] = $_SESSION['lacres_personalizados'][$indice]['iipr'];
         }
         // Atualizar $ultimo_central para ser usado no bloco seguinte
@@ -5446,7 +5458,7 @@ if (!empty($dados['CENTRAL IIPR']) && $ultimo_central !== null) {
                 $linha['lacre_correios'] = '';
             }
             // Sobrescrever com valor personalizado ou calculado
-            if (isset($_SESSION['lacres_personalizados'][$indice]['correios'])) {
+            if ($permitirMemoriaSessao && isset($_SESSION['lacres_personalizados'][$indice]['correios'])) {
                 $linha['lacre_correios'] = $_SESSION['lacres_personalizados'][$indice]['correios'];
             } else {
                 $gidx = isset($central_group_by_posto[$indice]) ? $central_group_by_posto[$indice] : 0;
@@ -5503,10 +5515,10 @@ if ($recalcular_regionais && extrairUltimoLacreSequencial($lacre_regionais) > 0)
             $linha['lacre_correios'] = '';
         }
         // Sobrescrever com valores personalizados se existirem
-        if (isset($_SESSION['lacres_personalizados'][$indice]['iipr'])) {
+        if ($permitirMemoriaSessao && isset($_SESSION['lacres_personalizados'][$indice]['iipr'])) {
             $linha['lacre_iipr'] = $_SESSION['lacres_personalizados'][$indice]['iipr'];
         }
-        if (isset($_SESSION['lacres_personalizados'][$indice]['correios'])) {
+        if ($permitirMemoriaSessao && isset($_SESSION['lacres_personalizados'][$indice]['correios'])) {
             $linha['lacre_correios'] = $_SESSION['lacres_personalizados'][$indice]['correios'];
         }
     }
@@ -5514,27 +5526,35 @@ if ($recalcular_regionais && extrairUltimoLacreSequencial($lacre_regionais) > 0)
 }
 
 // Aplicar lacres da sessao quando existirem (nao sobrescreve valores ja preenchidos)
-foreach ($dados as $grupo_nome => &$grupo_itens) {
-    foreach ($grupo_itens as &$linha) {
-        $indice = $linha['posto_codigo'];
-        if (!isset($linha['lacre_iipr'])) { $linha['lacre_iipr'] = ''; }
-        if (!isset($linha['lacre_correios'])) { $linha['lacre_correios'] = ''; }
-        if (isset($_SESSION['lacres_personalizados'][$indice])) {
-            $lp = $_SESSION['lacres_personalizados'][$indice];
-            if ($linha['lacre_iipr'] === '' && isset($lp['iipr']) && $lp['iipr'] !== '') {
-                $linha['lacre_iipr'] = $lp['iipr'];
-            }
-            if ($linha['lacre_correios'] === '' && isset($lp['correios']) && $lp['correios'] !== '') {
-                $linha['lacre_correios'] = $lp['correios'];
+if ($permitirMemoriaSessao) {
+    foreach ($dados as $grupo_nome => &$grupo_itens) {
+        foreach ($grupo_itens as &$linha) {
+            $indice = $linha['posto_codigo'];
+            if (!isset($linha['lacre_iipr'])) { $linha['lacre_iipr'] = ''; }
+            if (!isset($linha['lacre_correios'])) { $linha['lacre_correios'] = ''; }
+            if (isset($_SESSION['lacres_personalizados'][$indice])) {
+                $lp = $_SESSION['lacres_personalizados'][$indice];
+                if ($linha['lacre_iipr'] === '' && isset($lp['iipr']) && $lp['iipr'] !== '') {
+                    $linha['lacre_iipr'] = $lp['iipr'];
+                }
+                if ($linha['lacre_correios'] === '' && isset($lp['correios']) && $lp['correios'] !== '') {
+                    $linha['lacre_correios'] = $lp['correios'];
+                }
             }
         }
+        unset($linha);
     }
-    unset($linha);
+    unset($grupo_itens);
 }
-unset($grupo_itens);
 
 // Restaurar snapshot completo dos lacres apos recálculo
-if (!empty($_SESSION['snapshot_lacres_ativo']) && isset($_SESSION['snapshot_lacres_full']) && is_array($_SESSION['snapshot_lacres_full'])) {
+if (!$permitirMemoriaSessao && !empty($_SESSION['snapshot_lacres_ativo'])) {
+    $_SESSION['snapshot_lacres_ativo'] = 0;
+    unset($_SESSION['snapshot_lacres_full']);
+    unset($_SESSION['snapshot_lacres_by_posto']);
+}
+
+if ($permitirMemoriaSessao && !empty($_SESSION['snapshot_lacres_ativo']) && isset($_SESSION['snapshot_lacres_full']) && is_array($_SESSION['snapshot_lacres_full'])) {
     foreach ($dados as $grupo => &$itens) {
         foreach ($itens as &$posto) {
             $codigo = $posto['posto_codigo'];
@@ -5580,6 +5600,11 @@ if (!empty($_SESSION['snapshot_lacres_ativo']) && isset($_SESSION['snapshot_lacr
 $todas_regionais = array();
 foreach ($regionais_info as $num => $info) {
     $todas_regionais[$num] = $info['nome'];
+}
+
+$etiquetas_render = array();
+if ($permitirMemoriaSessao && isset($_SESSION['etiquetas']) && is_array($_SESSION['etiquetas'])) {
+    $etiquetas_render = $_SESSION['etiquetas'];
 }
 
 // Debug - Informações sobre a sessão para ajudar na depuração
@@ -8099,9 +8124,9 @@ Oficios CORREIOS com snapshot (mais recentes):
         <input class="etiqueta-barras etiqueta-pt" type="text" name="etiqueta_correios[p_<?php echo htmlspecialchars($dado['posto_codigo'], ENT_QUOTES, 'UTF-8') ?>]" maxlength="35" data-indice="<?php echo $dado['posto_codigo'] ?>" data-grupo="POUPA TEMPO" value="" placeholder="Leia a etiqueta Correios" style="width:100%;min-width:160px;font-family:monospace;font-size:11px;">
         <div class="alerta-duplicata" id="alerta-pt-<?php echo $dado['posto_codigo'] ?>"></div>
     <?php elseif ($grupo === 'CENTRAL IIPR'): ?>
-        <input class="etiqueta-barras central-etiqueta" type="text" name="etiqueta_correios[p_<?php echo htmlspecialchars($dado['posto_codigo'], ENT_QUOTES, 'UTF-8') ?>]" maxlength="35" data-indice="<?php echo $dado['posto_codigo'] ?>" value="<?php echo htmlspecialchars(isset($_SESSION['etiquetas'][$dado['posto_codigo']]) ? $_SESSION['etiquetas'][$dado['posto_codigo']] : '', ENT_QUOTES, 'UTF-8') ?>">
+        <input class="etiqueta-barras central-etiqueta" type="text" name="etiqueta_correios[p_<?php echo htmlspecialchars($dado['posto_codigo'], ENT_QUOTES, 'UTF-8') ?>]" maxlength="35" data-indice="<?php echo $dado['posto_codigo'] ?>" value="<?php echo htmlspecialchars(isset($etiquetas_render[$dado['posto_codigo']]) ? $etiquetas_render[$dado['posto_codigo']] : '', ENT_QUOTES, 'UTF-8') ?>">
     <?php else: ?>
-        <input class="etiqueta-barras etiqueta-validavel" type="text" name="etiqueta_correios[p_<?php echo htmlspecialchars($dado['posto_codigo'], ENT_QUOTES, 'UTF-8') ?>]" maxlength="35" data-indice="<?php echo $dado['posto_codigo'] ?>" data-grupo="<?php echo htmlspecialchars($grupo, ENT_QUOTES, 'UTF-8') ?>" data-regional="<?php echo isset($dado['regional']) ? htmlspecialchars($dado['regional'], ENT_QUOTES, 'UTF-8') : '0' ?>" value="<?php echo htmlspecialchars(isset($_SESSION['etiquetas'][$dado['posto_codigo']]) ? $_SESSION['etiquetas'][$dado['posto_codigo']] : '', ENT_QUOTES, 'UTF-8') ?>">
+        <input class="etiqueta-barras etiqueta-validavel" type="text" name="etiqueta_correios[p_<?php echo htmlspecialchars($dado['posto_codigo'], ENT_QUOTES, 'UTF-8') ?>]" maxlength="35" data-indice="<?php echo $dado['posto_codigo'] ?>" data-grupo="<?php echo htmlspecialchars($grupo, ENT_QUOTES, 'UTF-8') ?>" data-regional="<?php echo isset($dado['regional']) ? htmlspecialchars($dado['regional'], ENT_QUOTES, 'UTF-8') : '0' ?>" value="<?php echo htmlspecialchars(isset($etiquetas_render[$dado['posto_codigo']]) ? $etiquetas_render[$dado['posto_codigo']] : '', ENT_QUOTES, 'UTF-8') ?>">
         <div class="alerta-duplicata" id="alerta-<?php echo $dado['posto_codigo'] ?>"></div>
     <?php endif; ?>
 </td>
